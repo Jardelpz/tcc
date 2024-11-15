@@ -9,7 +9,7 @@
 
 extensions [gis]
 
-globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj students-percentual capacity-scale]
+globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj students-percentual capacity-scale new-total-students-eligible]
 
 breed [schools a-school]
 breed [students a-student]
@@ -113,7 +113,7 @@ to setup-map
   gis:set-world-envelope (gis:envelope-of ilhota)
   gis:set-drawing-color black
 
-  let growth 3
+  let growth 2.72
   set alto-bau-annual-growth growth
   set barra-de-luiz-alves-annual-growth growth
   set barranco-alto-annual-growth growth
@@ -287,7 +287,7 @@ to find-school
       set xcor median-x
       set ycor median-y
       set available-class [1 2]
-      set capacity capacity-scale
+      set capacity capacity-scale * 2
 
       foreach shapefiles [ shapefile ->
         if gis:contains? shapefile self [
@@ -308,6 +308,7 @@ end
 
 
 to update-density
+  let new-students-total 0
   foreach shapefiles [ shapefile ->
     foreach gis:feature-list-of shapefile [ this-area ->
       let district gis:property-value this-area "bairro"
@@ -317,10 +318,8 @@ to update-density
       let current-num-students-incremented current-num-students
       let total-students round (current-num-students-incremented * (annual-growth / 100 + 1))
       set current-num-students-incremented total-students
-
-      ;    print(word "total habitantes " current-num-students-incremented)
       let new-students current-num-students-incremented - current-num-students
-
+      set new-students-total new-students-total + new-students
       if new-students > 0 [
         gis:create-turtles-inside-polygon this-area students new-students [
           set area-name gis:property-value this-area "bairro"
@@ -339,7 +338,7 @@ to update-density
       ]
   ]
 ]
-
+set new-total-students-eligible new-students-total
 end
 
 
@@ -434,11 +433,11 @@ end
 
 
 to-report define-student-class
-  ifelse age >= 6 and age <= 9 [
+  ifelse age >= 6 and age <= 11 [
     report 1
   ]
   [
-  ifelse age >= 10 and age <= 14 [
+  ifelse age >= 12 and age <= 15 [
     report 2
   ]
   [
@@ -541,9 +540,13 @@ end
 
 to-report students-graduated
   let count-students count students with [
-    age > 18
+    age > 15
   ]
   report count-students
+end
+
+to-report new-students-eligible
+  report new-total-students-eligible
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -574,10 +577,10 @@ ticks
 30.0
 
 BUTTON
-116
-285
-197
-318
+120
+107
+201
+140
 NIL
 go-single
 NIL
@@ -591,10 +594,10 @@ NIL
 1
 
 BUTTON
-32
-285
-95
-318
+36
+107
+99
+140
 NIL
 setup
 NIL
@@ -608,26 +611,19 @@ NIL
 1
 
 SLIDER
-39
-353
-211
-386
+43
+175
+215
+208
 years
 years
 0
 100
-0.0
+57.0
 1
 1
 NIL
 HORIZONTAL
-
-OUTPUT
-33
-123
-179
-218
-11
 
 SLIDER
 31
@@ -638,7 +634,7 @@ scale-factor
 scale-factor
 0
 100
-30.0
+20.0
 1
 1
 NIL
@@ -653,7 +649,7 @@ alto-bau-annual-growth
 alto-bau-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -668,7 +664,7 @@ bau-seco-annual-growth
 bau-seco-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -683,7 +679,7 @@ braco-do-bau-annual-growth
 braco-do-bau-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -698,7 +694,7 @@ bau-baixo-annual-growth
 bau-baixo-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -713,7 +709,7 @@ pedra-de-amolar-annual-growth
 pedra-de-amolar-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -728,7 +724,7 @@ pocinho-annual-growth
 pocinho-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -743,7 +739,7 @@ barranco-alto-annual-growth
 barranco-alto-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -758,7 +754,7 @@ centro-annual-growth
 centro-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -773,7 +769,7 @@ missoes-annual-growth
 missoes-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -788,7 +784,7 @@ ilhotinha-annual-growth
 ilhotinha-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -803,7 +799,7 @@ barra-de-luiz-alves-annual-growth
 barra-de-luiz-alves-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -818,7 +814,7 @@ minas-annual-growth
 minas-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -833,7 +829,7 @@ sao-joao-annual-growth
 sao-joao-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -848,7 +844,7 @@ bau-central-annual-growth
 bau-central-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
@@ -863,17 +859,17 @@ boa-vista-annual-growth
 boa-vista-annual-growth
 0
 100
-3.0
+2.72
 0.1
 1
 NIL
 HORIZONTAL
 
 PLOT
-1220
-218
-1667
-385
+1223
+528
+1670
+801
 População por bairro
 Time
 population
@@ -931,10 +927,10 @@ students-graduated
 11
 
 PLOT
-1222
-400
-1704
-552
+1219
+217
+1663
+369
 Estudantes por escola
 Students
 NIL
@@ -953,10 +949,10 @@ PENS
 "Nova Escola" 1.0 0 -13791810 true "" "plot students-per-school \"Nova Escola\""
 
 PLOT
-1225
-574
-1687
-724
+1221
+374
+1664
+524
 Capacidade das escolas
 Escola
 NIL
@@ -976,9 +972,9 @@ PENS
 
 PLOT
 1676
-184
+215
 1876
-334
+365
 EM para EEB
 NIL
 NIL
@@ -1022,10 +1018,10 @@ students-not-studying
 11
 
 BUTTON
-125
-416
-212
-449
+129
+238
+216
+271
 NIL
 go-repeat
 T
@@ -1050,10 +1046,10 @@ students-studying
 11
 
 BUTTON
-19
-417
-111
-450
+23
+239
+115
+272
 NIL
 find-school
 NIL
@@ -1065,6 +1061,17 @@ NIL
 NIL
 NIL
 1
+
+MONITOR
+1411
+164
+1542
+209
+NIL
+new-students-eligible
+17
+1
+11
 
 @#$#@#$#@
 Informações do Modelo NetLogo

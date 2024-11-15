@@ -33,7 +33,7 @@
 
 extensions [gis]
 
-globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj students-percentual capacity-scale new-total-students-eligible]
+globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj students-percentual capacity-scale new-total-students-eligible total-first-choice]
 
 breed [schools a-school]
 breed [students a-student]
@@ -69,6 +69,7 @@ end
 
 to go
   clear-drawing
+  set total-first-choice 0
   foreach shapefiles [ shapefile ->
     gis:draw shapefile 1
   ]
@@ -158,7 +159,56 @@ end
 
 
 to setup-schools
-  set capacity-scale 750 * scale-factor / 100
+   set capacity-scale round(480 * scale-factor / 100)
+  create-schools 1 [
+    set area-name "ilhotinha"
+    set school-type "municiple"
+    set shape "house"
+    set color brown
+    set name "Escola Municipal Domingos José Machado"
+    set xcor 26
+    set ycor -25
+    set available-class [1 2]
+    set capacity capacity-scale
+  ]
+
+  create-schools 1 [
+    set area-name "minas"
+    set school-type "municiple"
+    set shape "house"
+    set color violet
+    set name "Escola Municipal José Elias de Oliveira"
+    set xcor 7
+    set ycor -38
+    set available-class [1 2]
+    set capacity capacity-scale
+  ]
+
+  create-schools 1 [
+    set area-name "bau-central"
+    set school-type "municiple"
+    set shape "house"
+    set color orange
+    set name "Escola Municipal Alberto Schmitt"
+    set xcor -4
+    set ycor 9
+    set available-class [1 2]
+    set capacity capacity-scale
+  ]
+
+  create-schools 1 [
+    set area-name "alto-bau"
+    set school-type "municiple"
+    set shape "house"
+    set color yellow
+    set name "Escola Municipal Pedro Teixeira de Melo"
+    set xcor -22
+    set ycor 16
+    set available-class [1 2]
+    set capacity capacity-scale
+  ]
+
+  set capacity-scale round(750 * scale-factor / 100)
   create-schools 1 [
     set area-name "ilhotinha"
     set school-type "state"
@@ -182,6 +232,7 @@ to setup-schools
     set available-class [1 2 3]
     set capacity capacity-scale
   ]
+
 end
 
 
@@ -207,6 +258,7 @@ end
 to choose-school
   let min-distance 90
   let closest-school nobody
+  let first-choice true
   let school-list sort schools
   foreach school-list [
     school ->
@@ -221,6 +273,7 @@ to choose-school
 
   ifelse closest-school != nobody [
     if [chosen-school] of self != nobody [
+      set first-choice false
       ask chosen-school [
         let students-updated number-students - 1
         set number-students students-updated
@@ -238,7 +291,9 @@ to choose-school
     pen-down
     face closest-school
     move-to closest-school
-
+    if first-choice = true [
+      set total-first-choice total-first-choice + 1
+    ]
   ] [
     if [chosen-school] of self = nobody [
       set color red
@@ -623,7 +678,7 @@ years
 years
 0
 100
-43.0
+0.0
 1
 1
 NIL
@@ -638,7 +693,7 @@ scale-factor
 scale-factor
 0
 100
-20.0
+35.0
 1
 1
 NIL
@@ -1051,6 +1106,17 @@ MONITOR
 206
 NIL
 new-students-eligible
+17
+1
+11
+
+MONITOR
+1554
+159
+1658
+204
+NIL
+total-first-choice
 17
 1
 11

@@ -26,14 +26,13 @@
 ; identificar ponto medio de pessoas sem escola
 
 ; estudar se crescimento de 10 anos do modelo, bate com a realidade de ilhota de 2020 - ok
-; em 2010 a populacao era de 12.356 (simulando 50% da escala real = 1608 alunos) que da 13%. Após 12 anos a populacao de ilhota tem 17.046 pessoas (50% sendo 2212) = 13%.
-
+; em 2010 a populacao era de 12.356 (sendo 10% = 1235). Quando o modelo inicia a execucao a qtd de alunos com scale 10% é de 1075. Após 10 anos a populacao de ilhota tem 17.046 pessoas (10% sendo 1704) e o modelo após 10 anos em 10% deu 1410. - 86 e 83%.
 ; limitar a 15km na escolha da escolha - de uma ponta a outra do mapa da 38 km, aqui no netlogo da 200 patches entao limitamos a pouco menos da metade 90 patches como distancia maxima - ok
 ; grafico relacionando populacao e capaicidade de escola? - todo
 
 extensions [gis]
 
-globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj students-percentual capacity-scale new-total-students-eligible]
+globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj year-state]
 
 breed [schools a-school]
 breed [students a-student]
@@ -45,8 +44,8 @@ students-own [chosen-school previous-school start-age age income area-name class
 to setup
   clear-all
   reset-ticks
+  set year-state -1
   set years 0
-  set students-percentual 0.3
   setup-map
   setup-schools
   setup-students
@@ -73,7 +72,7 @@ to go
     gis:draw shapefile 1
   ]
 
-  if ticks >= 100 [
+  if ticks >= 50 [
     print "Limite de execucao excedido"
     stop
   ]
@@ -105,6 +104,7 @@ to go
     ]
    ]
   update-density
+  set year-state years
 
   tick
   set years ticks
@@ -137,7 +137,7 @@ to setup-map
   gis:set-world-envelope (gis:envelope-of ilhota)
   gis:set-drawing-color black
 
-  let growth 2.72
+  let growth 3
   set alto-bau-annual-growth growth
   set barra-de-luiz-alves-annual-growth growth
   set barranco-alto-annual-growth growth
@@ -158,49 +158,164 @@ end
 
 
 to setup-schools
-  set capacity-scale 750 * scale-factor / 100
-  create-schools 1 [
-    set area-name "ilhotinha"
-    set school-type "state"
-    set shape "house"
-    set color yellow
-    set name "EEB Marcos Konder"
-    set xcor 18
-    set ycor -21
-    set available-class [1 2 3]
-    set capacity capacity-scale
-  ]
+;    create-schools 1 [
+;    set area-name "ilhotinha"
+;    set school-type "state"
+;    set shape "house"
+;    set color blue
+;    set name "EEB Marcos Konder"
+;    set xcor 14
+;    set ycor -15
+;    set available-class [1 2 3]
+;    set capacity 100
+;  ]
+;  create-schools 1 [
+;    set area-name "ilhotinha"
+;    set school-type "state"
+;    set shape "house"
+;    set color pink
+;    set name "EEB Marcos Konder"
+;    set xcor 18
+;    set ycor -21
+;    set available-class [1 2 3]
+;    set capacity 100
+;  ]
+;
+;  create-schools 1 [
+;    set area-name "pedra-de-amolar"
+;    set school-type "state"
+;    set shape "house"
+;    set color violet
+;    set name "EEB Valério Gomes"
+;    set xcor 33
+;    set ycor 3
+;    set available-class [1 2 3]
+;    set capacity 100
+;  ]
+;
+;  create-schools 1 [
+;    set area-name "ilhotinha"
+;    set school-type "municiple"
+;    set shape "house"
+;    set color orange
+;    set name "Escola Municipal Domingos José Machado"
+;    set xcor 26
+;    set ycor -25
+;    set available-class [1 2]
+;    set capacity 100
+;  ]
+;
+;  create-schools 1 [
+;    set area-name "minas"
+;    set school-type "municiple"
+;    set shape "house"
+;    set color blue
+;    set name "Escola Municipal José Elias de Oliveira"
+;    set xcor 7
+;    set ycor -38
+;    set available-class [1 2]
+;    set capacity 100
+;  ]
+;
+;  create-schools 1 [
+;    set area-name "bau-central"
+;    set school-type "municiple"
+;    set shape "house"
+;    set color yellow
+;    set name "Escola Municipal Alberto Schmitt"
+;    set xcor -4
+;    set ycor 9
+;    set available-class [1 2]
+;    set capacity 100
+;  ]
+;
+;  create-schools 1 [
+;    set area-name "alto-bau"
+;    set school-type "municiple"
+;    set shape "house"
+;    set color brown
+;    set name "Escola Municipal Pedro Teixeira de Melo"
+;    set xcor -22
+;    set ycor 16
+;    set available-class [1 2]
+;    set capacity 100
+;  ]
 
-  create-schools 1 [
-    set area-name "pedra-de-amolar"
-    set school-type "state"
-    set shape "house"
-    set color violet
-    set name "EEB Valério Gomes"
-    set xcor 33
-    set ycor 3
-    set available-class [1 2 3]
-    set capacity capacity-scale
-  ]
+
 end
 
 
 to setup-students
+  create-students 10 [
+      set area-name "bairro"
+      set age 10
+      set start-age age
+      set income distribute-income
+      set chosen-school nobody
+      set previous-school nobody
+      set shape define-shape
+      set color white
+      set class define-student-class
+    set xcor 25
+    set ycor 10
+  ]
+
+  create-students 5 [
+      set area-name "bairro"
+      set age 10
+      set start-age age
+      set income distribute-income
+      set chosen-school nobody
+      set previous-school nobody
+      set shape define-shape
+      set color white
+      set class define-student-class
+    set xcor 5
+    set ycor -41
+  ]
+
+  foreach gis:feature-list-of ab [ this-area ->
+    let num-students round (scale-factor / 100 * gis:property-value this-area "densidade" * gis:property-value this-area "area")
+    gis:create-turtles-inside-polygon this-area students 5 [
+
+      set area-name gis:property-value this-area "bairro"
+;      set age distribute-age
+      set age 17
+      set start-age age
+      set income distribute-income
+      set chosen-school nobody
+      set previous-school nobody
+      set shape define-shape
+      set color white
+      set class define-student-class
+    ]
+    gis:create-turtles-inside-polygon this-area students 7 [
+      set area-name gis:property-value this-area "bairro"
+      set age 10
+      set start-age age
+      set income distribute-income
+      set chosen-school nobody
+      set previous-school nobody
+      set shape define-shape
+      set color white
+      set class define-student-class
+    ]
+  ]
   create-students-district ab
-  create-students-district bla
-  create-students-district ba
+;  create-students-district bla
+;  create-students-district ba
   create-students-district bb
-  create-students-district bc
-  create-students-district bs
-  create-students-district bv
-  create-students-district bdb
-  create-students-district ce
-  create-students-district il
-  create-students-district mi
-  create-students-district mis
-  create-students-district pda
-  create-students-district poc
-  create-students-district sj
+;  create-students-district bc
+;  create-students-district bs
+;  create-students-district bv
+;  create-students-district bdb
+;  create-students-district ce
+;  create-students-district il
+;  create-students-district mi
+;  create-students-district mis
+;  create-students-district pda
+;  create-students-district poc
+;  create-students-district sj
 end
 
 
@@ -282,12 +397,13 @@ to find-school
     create-schools 1 [
       set school-type "state"
       set shape "house"
-      set color 95
+      set color white
+      set size 3
       set name "Nova Escola"
       set xcor median-x
       set ycor median-y
       set available-class [1 2 3]
-      set capacity capacity-scale
+      set capacity 100
 
       foreach shapefiles [ shapefile ->
         if gis:contains? shapefile self [
@@ -308,18 +424,27 @@ end
 
 
 to update-density
-  let new-students-total 0
   foreach shapefiles [ shapefile ->
     foreach gis:feature-list-of shapefile [ this-area ->
       let district gis:property-value this-area "bairro"
       let slider-growth-name word district "-annual-growth"
       let annual-growth runresult slider-growth-name ; busca o valor do slider pelo nome
       let current-num-students students-per-area district
+
       let current-num-students-incremented current-num-students
-      let total-students round (current-num-students-incremented * (annual-growth / 100 + 1))
-      set current-num-students-incremented total-students
+      let increment-years years - year-state
+
+      if year-state = -1 [ ; se a primeira execucao nao for 0 years
+        set increment-years increment-years - 1
+      ]
+
+      repeat increment-years [
+        let total-students round (current-num-students-incremented * (annual-growth / 100 + 1))
+        set current-num-students-incremented total-students
+      ]
+      ;    print(word "total habitantes " current-num-students-incremented)
       let new-students current-num-students-incremented - current-num-students
-      set new-students-total new-students-total + new-students
+
       if new-students > 0 [
         gis:create-turtles-inside-polygon this-area students new-students [
           set area-name gis:property-value this-area "bairro"
@@ -338,13 +463,13 @@ to update-density
       ]
   ]
 ]
-set new-total-students-eligible new-students-total
+
 end
 
 
 to create-students-district [shapefile]
   foreach gis:feature-list-of shapefile [ this-area ->
-    let num-students round (scale-factor / 100 * gis:property-value this-area "densidade" * gis:property-value this-area "area") * students-percentual
+    let num-students round (scale-factor / 100 * gis:property-value this-area "densidade" * gis:property-value this-area "area")
     gis:create-turtles-inside-polygon this-area students num-students [
       set area-name gis:property-value this-area "bairro"
       set age distribute-age
@@ -375,19 +500,20 @@ end
 
 
 to-report distribute-age
+  ;; Gera um número aleatório entre 0 e 1 para determinar a idade com base nas porcentagens ajustadas
   let prob random-float 1
 
   if prob < 0.336 [
     ;; 33,6% - Idade entre 6 e 9 anos
-    report random 4 + 6
+    report random 4 + 6  ;; Gera idade entre 6 e 9 anos
   ]
   ifelse prob < 0.661 [
     ;; 32,5% - Idade entre 10 e 14 anos
-    report random 5 + 10
+    report random 5 + 10  ;; Gera idade entre 10 e 14 anos
   ]
   [
     ;; 33,9% - Idade entre 15 e 18 anos
-    report random 4 + 15
+    report random 4 + 15  ;; Gera idade entre 15 e 18 anos
   ]
 end
 
@@ -395,17 +521,18 @@ end
 to-report distribute-income
   if age <= 18 [report 0]
   let prob random-float 1
+  ;; Atribui a renda com base na distribuição
   if prob < 0.70 [
     ;; 70% dos estudantes ganham menos de 2 salários mínimos
     report (random 1420 + 1420)
   ]
   ifelse prob < 0.90 [
     ;; 20% dos estudantes ganham entre 3.000 e 8.000 reais
-    report (random 5000 + 3000)
+    report (random 5000 + 3000)  ;; Intervalo de 3.000 a 8.000 reais
   ]
   [
     ;; 10% dos estudantes ganham mais de 8.526,00 reais
-    report (random 2000 + 8000)
+    report (random 2000 + 8000)  ;; Intervalo de 8.000 a 10.000 reais
   ]
 end
 
@@ -414,36 +541,75 @@ to-report redistribute-income [current-income]
   if age <= 18 [report 0]
   if income = 0 [report distribute-income]
   let amount 0
-  let number random 100
-  let income-inflation-updated (current-income * 0.05)
-  ifelse number < 90 [ ; 90% somente dissidio
-    set amount amount + income-inflation-updated
-  ][
-    let increment (random 1000 + 500)
-    set amount amount + income-inflation-updated + increment
+  let increment-years years - year-state
+
+  if year-state = -1 [
+    set increment-years increment-years - 1
   ]
 
+  repeat increment-years [
+    let number random 100
+    let income-inflation-updated (current-income * 0.05)
+    ifelse number < 90 [ ; 90% so dissidio
+      set amount amount + income-inflation-updated
+    ][
+      let increment (random 1000 + 500)
+      set amount amount + income-inflation-updated + increment
+    ]
+  ]
   report round(amount + current-income)
 end
 
 
 to-report define-shape
   report "person"
+;  ifelse age >= 6 and age <= 9 [
+;    report "circle"
+;  ]
+;  [
+;  ifelse age >= 10 and age <= 14 [
+;    report "triangle"
+;  ]
+;  [
+;    report "square"
+;  ]
+;  ]
 end
 
 
 to-report define-student-class
-  ifelse age >= 6 and age <= 11 [
+  ifelse age >= 6 and age <= 9 [
     report 1
   ]
   [
-  ifelse age >= 12 and age <= 15 [
+  ifelse age >= 10 and age <= 14 [
     report 2
   ]
   [
     report 3
   ]
   ]
+end
+
+
+to show-results
+  clear-output
+  output-print (word "Quantidade total de alunos: " count students)
+  output-print (word "Média de renda Victor Konder: " average-income-per-area "alto-bau")
+  output-print (word "Média de renda Itoupava Seca: " average-income-per-area "ITOUPAVA SECA")
+  output-print (word "Número de estudantes que saíram do bairro de origem: " students-moved-between-areas)
+;  output-print (word "Quantidade de alunos sem escola: " students-not-studying)
+;  output-print (word "Quantidade de alunos estudando: " students-studying)
+;  output-print (word "Quantidade de alunos formados: " students-graduated)
+;  output-print (word "Quantidade de alunos > 18 sem escola: " students-not-graduated)
+  output-print (word " ")
+  let school-list sort schools
+
+;  foreach school-list [
+;    school ->
+;    output-print (word [name] of school ": " students-per-school2 school)
+;  ]
+
 end
 
 
@@ -462,6 +628,8 @@ to-report students-per-school [school-name]
     report [number-students] of school-selected
   ]
   report 0
+;  let students-in-school students with [chosen-school = school-selected and chosen-school != nobody]
+;  report count students-in-school
 end
 
 
@@ -491,13 +659,16 @@ end
 
 
 to-report school-capacity [school-name]
+;  print(" ------------- ")
   let school-selected one-of schools with [name = school-name]
   if school-selected = nobody [
     report 0
   ]
-
+;  print(school-selected)
   let students-in-school students with [chosen-school = school-selected]
+;  print(students-in-school)
   let count-students count students-in-school
+;  print(count-students)
   let remaining-positions [capacity] of school-selected - count-students
   ifelse remaining-positions >= 0 [
     report remaining-positions
@@ -508,6 +679,11 @@ to-report school-capacity [school-name]
 end
 
 
+;to-report students-per-school2 [school]
+;  let students-in-school students with [chosen-school = school]
+;  report count students-in-school
+;end
+;
 
 to-report students-moved-between-areas
   let moved-students count students with [
@@ -548,19 +724,15 @@ to-report students-graduated
   ]
   report count-students
 end
-
-to-report new-students-eligible
-  report new-total-students-eligible
-end
 @#$#@#$#@
 GRAPHICS-WINDOW
-249
-38
-1183
-973
+230
+10
+975
+756
 -1
 -1
-9.17
+7.3
 1
 10
 1
@@ -581,10 +753,10 @@ ticks
 30.0
 
 BUTTON
-122
-96
-203
-129
+116
+285
+197
+318
 NIL
 go-single
 NIL
@@ -598,10 +770,10 @@ NIL
 1
 
 BUTTON
-38
-96
-101
-129
+32
+285
+95
+318
 NIL
 setup
 NIL
@@ -615,19 +787,43 @@ NIL
 1
 
 SLIDER
-45
-164
-217
-197
+39
+353
+211
+386
 years
 years
 0
 100
-43.0
+0.0
 1
 1
 NIL
 HORIZONTAL
+
+OUTPUT
+33
+123
+179
+218
+11
+
+BUTTON
+101
+226
+179
+259
+Métricas
+show-results
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 SLIDER
 31
@@ -638,172 +834,157 @@ scale-factor
 scale-factor
 0
 100
-20.0
+10.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-323
-405
-415
-438
+1022
+457
+1114
+490
 alto-bau-annual-growth
 alto-bau-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-391
-86
-483
-119
+1090
+138
+1182
+171
 bau-seco-annual-growth
 bau-seco-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-685
-111
-777
-144
+1248
+159
+1340
+192
 braco-do-bau-annual-growth
 braco-do-bau-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-429
-576
-521
-609
+1128
+628
+1220
+661
 bau-baixo-annual-growth
 bau-baixo-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-944
-338
-1036
-371
+1548
+809
+1640
+842
 pedra-de-amolar-annual-growth
 pedra-de-amolar-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-487
-646
-579
-679
+1050
+694
+1142
+727
 pocinho-annual-growth
 pocinho-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-1066
-484
-1158
-517
-barranco-alto-annual-growth
-barranco-alto-annual-growth
-0
-100
-2.72
-0.1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-552
-692
-644
-725
+1115
+740
+1207
+773
 centro-annual-growth
 centro-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-545
-758
-637
-791
+1108
+806
+1200
+839
 missoes-annual-growth
 missoes-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-1035
-718
-1127
-751
+1324
+794
+1416
+827
 ilhotinha-annual-growth
 ilhotinha-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-1054
-639
-1146
-672
+1297
+748
+1389
+781
 barra-de-luiz-alves-annual-growth
 barra-de-luiz-alves-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
@@ -818,7 +999,7 @@ minas-annual-growth
 minas-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
@@ -833,22 +1014,22 @@ sao-joao-annual-growth
 sao-joao-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-389
-504
-481
-537
+1088
+556
+1180
+589
 bau-central-annual-growth
 bau-central-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
@@ -863,17 +1044,17 @@ boa-vista-annual-growth
 boa-vista-annual-growth
 0
 100
-2.72
+3.0
 0.1
 1
 NIL
 HORIZONTAL
 
 PLOT
-1217
-535
-1642
-809
+1220
+218
+1667
+385
 População por bairro
 Time
 population
@@ -931,10 +1112,10 @@ students-graduated
 11
 
 PLOT
-1216
-214
-1698
-366
+1223
+402
+1705
+554
 Estudantes por escola
 Students
 NIL
@@ -946,15 +1127,19 @@ true
 true
 "" ""
 PENS
-"EEB Marcos Konder" 1.0 0 -1184463 true "" "plot students-per-school \"EEB Marcos Konder\""
-"EEB Valério Gomes" 1.0 0 -8630108 true "" "plot students-per-school \"EEB Valério Gomes\""
-"Nova Escola" 1.0 0 -13791810 true "" "plot students-per-school \"Nova Escola\""
+"EEB Marcos Konder" 1.0 0 -16777216 true "" "plot students-per-school \"EEB Marcos Konder\""
+"EEB Valério Gomes" 1.0 0 -612749 true "" "plot students-per-school \"EEB Valério Gomes\""
+"Pedro Teixeira de Melo" 1.0 0 -14439633 true "" "plot students-per-school \"Escola Municipal Pedro Teixeira de Melo\""
+"Alberto Schmitt" 1.0 0 -14454117 true "" "plot students-per-school \"Escola Municipal Alberto Schmitt\""
+" Domingos José Machado" 1.0 0 -6459832 true "" "plot students-per-school \"Escola Municipal Domingos José Machado\""
+"José Elias de Oliveira" 1.0 0 -1184463 true "" "plot students-per-school \"Escola Municipal José Elias de Oliveira\""
+"Nova Escola" 1.0 0 -2674135 true "" "plot students-per-school \"Nova Escola\""
 
 PLOT
-1217
-376
-1679
-526
+1225
+574
+1687
+724
 Capacidade das escolas
 Escola
 NIL
@@ -966,9 +1151,31 @@ true
 true
 "" ""
 PENS
-"EEB Marcos Konder" 1.0 0 -1184463 true "" "plot school-capacity \"EEB Marcos Konder\""
-"EEB Valério Gomes" 1.0 0 -8630108 true "" "plot school-capacity \"EEB Valério Gomes\""
-"Nova Escola" 1.0 0 -13791810 true "" "plot school-capacity \"Nova Escola\""
+"EEB Marcos Konder" 1.0 0 -16777216 true "" "plot school-capacity \"EEB Marcos Konder\""
+"EEB Valério Gomes" 1.0 0 -2674135 true "" "plot school-capacity \"EEB Valério Gomes\""
+"Domingos José Machado" 1.0 0 -12087248 true "" "plot school-capacity \"Escola Municipal Domingos José Machado\""
+"José Elias de Oliveira" 1.0 0 -14454117 true "" "plot school-capacity \"Escola Municipal José Elias de Oliveira\""
+"Alberto Schmitt" 1.0 0 -955883 true "" "plot school-capacity \"Escola Municipal Alberto Schmitt\""
+"Pedro Teixeira de Melo" 1.0 0 -6459832 true "" "plot school-capacity \"Escola Municipal Pedro Teixeira de Melo\""
+"Nova Escola" 1.0 0 -5298144 true "" "plot school-capacity \"Nova Escola\""
+
+PLOT
+1676
+184
+1876
+334
+EM para EEB
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count-municipal-to-estadual"
 
 PLOT
 1674
@@ -1000,10 +1207,10 @@ students-not-studying
 11
 
 BUTTON
-131
-227
-218
-260
+125
+416
+212
+449
 NIL
 go-repeat
 T
@@ -1028,10 +1235,10 @@ students-studying
 11
 
 BUTTON
-74
-366
-166
-399
+838
+44
+930
+77
 NIL
 find-school
 NIL
@@ -1044,16 +1251,20 @@ NIL
 NIL
 1
 
-MONITOR
-1405
-161
-1536
-206
-NIL
-new-students-eligible
-17
+SLIDER
+1415
+755
+1507
+788
+barranco-alto-annual-growth
+barranco-alto-annual-growth
+0
+100
+3.0
+0.1
 1
-11
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 Informações do Modelo NetLogo

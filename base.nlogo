@@ -158,17 +158,17 @@ end
 
 
 to setup-schools
-    create-schools 1 [
-    set area-name "ilhotinha"
-    set school-type "state"
-    set shape "house"
-    set color blue
-    set name "EEB Marcos Konder"
-    set xcor 14
-    set ycor -15
-    set available-class [1 2 3]
-    set capacity 100
-  ]
+;    create-schools 1 [
+;    set area-name "ilhotinha"
+;    set school-type "state"
+;    set shape "house"
+;    set color blue
+;    set name "EEB Marcos Konder"
+;    set xcor 14
+;    set ycor -15
+;    set available-class [1 2 3]
+;    set capacity 100
+;  ]
 ;  create-schools 1 [
 ;    set area-name "ilhotinha"
 ;    set school-type "state"
@@ -302,7 +302,7 @@ to setup-students
     ]
   ]
 ;  create-students-district ab
-;  create-students-district bla
+  create-students-district bla
 ;  create-students-district ba
 ;  create-students-district bb
 ;  create-students-district bc
