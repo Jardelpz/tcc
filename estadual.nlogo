@@ -33,7 +33,7 @@
 
 extensions [gis]
 
-globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj students-percentual capacity-scale new-total-students-eligible]
+globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj students-percentual capacity-scale new-total-students-eligible total-first-choice]
 
 breed [schools a-school]
 breed [students a-student]
@@ -58,7 +58,7 @@ end
 
 to go-repeat
   go
-  wait 1
+  wait 0.1
 end
 
 
@@ -69,6 +69,7 @@ end
 
 to go
   clear-drawing
+  set total-first-choice 0
   foreach shapefiles [ shapefile ->
     gis:draw shapefile 1
   ]
@@ -168,7 +169,7 @@ to setup-schools
     set xcor 18
     set ycor -21
     set available-class [1 2 3]
-    set capacity capacity-scale
+    set capacity round(capacity-scale)
   ]
 
   create-schools 1 [
@@ -180,7 +181,7 @@ to setup-schools
     set xcor 33
     set ycor 3
     set available-class [1 2 3]
-    set capacity capacity-scale
+    set capacity round(capacity-scale)
   ]
 end
 
@@ -207,6 +208,7 @@ end
 to choose-school
   let min-distance 90
   let closest-school nobody
+  let first-choice true
   let school-list sort schools
   foreach school-list [
     school ->
@@ -221,6 +223,7 @@ to choose-school
 
   ifelse closest-school != nobody [
     if [chosen-school] of self != nobody [
+      set first-choice false
       ask chosen-school [
         let students-updated number-students - 1
         set number-students students-updated
@@ -238,7 +241,9 @@ to choose-school
     pen-down
     face closest-school
     move-to closest-school
-
+    if first-choice = true [
+      set total-first-choice total-first-choice + 1
+    ]
   ] [
     if [chosen-school] of self = nobody [
       set color red
@@ -287,7 +292,7 @@ to find-school
       set xcor median-x
       set ycor median-y
       set available-class [1 2 3]
-      set capacity capacity-scale
+      set capacity round(capacity-scale)
 
       foreach shapefiles [ shapefile ->
         if gis:contains? shapefile self [
@@ -623,7 +628,7 @@ years
 years
 0
 100
-43.0
+0.0
 1
 1
 NIL
@@ -638,7 +643,7 @@ scale-factor
 scale-factor
 0
 100
-20.0
+35.0
 1
 1
 NIL
@@ -1051,6 +1056,17 @@ MONITOR
 206
 NIL
 new-students-eligible
+17
+1
+11
+
+MONITOR
+1549
+159
+1653
+204
+NIL
+total-first-choice
 17
 1
 11

@@ -58,7 +58,7 @@ end
 
 to go-repeat
   go
-  wait 1
+  wait 0.1
 end
 
 
@@ -176,7 +176,7 @@ to setup-schools
     set area-name "minas"
     set school-type "municiple"
     set shape "house"
-    set color violet
+    set color orange
     set name "Escola Municipal José Elias de Oliveira"
     set xcor 7
     set ycor -38
@@ -188,7 +188,7 @@ to setup-schools
     set area-name "bau-central"
     set school-type "municiple"
     set shape "house"
-    set color orange
+    set color pink
     set name "Escola Municipal Alberto Schmitt"
     set xcor -4
     set ycor 9
@@ -200,7 +200,7 @@ to setup-schools
     set area-name "alto-bau"
     set school-type "municiple"
     set shape "house"
-    set color yellow
+    set color gray
     set name "Escola Municipal Pedro Teixeira de Melo"
     set xcor -22
     set ycor 16
@@ -732,7 +732,7 @@ HORIZONTAL
 SLIDER
 685
 111
-777
+881
 144
 braco-do-bau-annual-growth
 braco-do-bau-annual-growth
@@ -775,10 +775,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-487
-646
-579
-679
+459
+641
+551
+674
 pocinho-annual-growth
 pocinho-annual-growth
 0
@@ -850,10 +850,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1054
-639
-1146
-672
+1059
+618
+1152
+651
 barra-de-luiz-alves-annual-growth
 barra-de-luiz-alves-annual-growth
 0
@@ -1004,6 +1004,10 @@ PENS
 "EEB Marcos Konder" 1.0 0 -1184463 true "" "plot students-per-school \"EEB Marcos Konder\""
 "EEB Valério Gomes" 1.0 0 -8630108 true "" "plot students-per-school \"EEB Valério Gomes\""
 "Nova Escola" 1.0 0 -13791810 true "" "plot students-per-school \"Nova Escola\""
+"EM Pedro Teixeira de Melo" 1.0 0 -7500403 true "" "plot students-per-school \"Escola Municipal Pedro Teixeira de Melo\""
+"EM Alberto Schmitt" 1.0 0 -2064490 true "" "plot students-per-school \"Escola Municipal Alberto Schmitt\""
+"EM José Elias de Oliveira" 1.0 0 -955883 true "" "plot students-per-school \"Escola Municipal José Elias de Oliveira\""
+"Domingos José Machado" 1.0 0 -6459832 true "" "plot students-per-school \"Escola Municipal Domingos José Machado\""
 
 PLOT
 1217
@@ -1024,6 +1028,10 @@ PENS
 "EEB Marcos Konder" 1.0 0 -1184463 true "" "plot school-capacity \"EEB Marcos Konder\""
 "EEB Valério Gomes" 1.0 0 -8630108 true "" "plot school-capacity \"EEB Valério Gomes\""
 "Nova Escola" 1.0 0 -13791810 true "" "plot school-capacity \"Nova Escola\""
+"EM Pedro Teixeira de Melo" 1.0 0 -7500403 true "" "plot school-capacity \"Escola Municipal Pedro Teixeira de Melo\""
+"Alberto Schmitt" 1.0 0 -2064490 true "" "plot school-capacity \"Escola Municipal Alberto Schmitt\""
+"EM José Elias de Oliveira" 1.0 0 -955883 true "" "plot school-capacity \"Escola Municipal José Elias de Oliveira\""
+"EM Domingos José Machado" 1.0 0 -6459832 true "" "plot school-capacity \"Escola Municipal Domingos José Machado\""
 
 PLOT
 1674
