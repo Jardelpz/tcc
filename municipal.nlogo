@@ -625,7 +625,7 @@ years
 years
 0
 100
-14.0
+18.0
 1
 1
 NIL
@@ -974,7 +974,7 @@ PENS
 "José Elias de Oliveira" 1.0 0 -8630108 true "" "plot school-capacity \"Escola Municipal José Elias de Oliveira\""
 "Alberto Schmitt" 1.0 0 -955883 true "" "plot school-capacity \"Escola Municipal Alberto Schmitt\""
 "Pedro Teixeira de Melo" 1.0 0 -1184463 true "" "plot school-capacity \"Escola Municipal Pedro Teixeira de Melo\""
-"Nova Escola" 1.0 0 -13791810 true "" "plot school-capacity \"Nova Escola\""
+"Nova Escola" 1.0 0 -14454117 true "" "plot school-capacity \"Nova Escola\""
 
 PLOT
 1676

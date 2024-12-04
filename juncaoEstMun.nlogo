@@ -341,6 +341,7 @@ to find-school
       set name "Nova Escola"
       set xcor median-x
       set ycor median-y
+      set size 2
       set available-class [1 2 3]
       set capacity capacity-scale
 
@@ -611,11 +612,11 @@ end
 GRAPHICS-WINDOW
 249
 38
-1183
-973
+1072
+862
 -1
 -1
-9.17
+8.07
 1
 10
 1
@@ -636,10 +637,10 @@ ticks
 30.0
 
 BUTTON
-122
-96
-203
-129
+125
+224
+206
+257
 NIL
 go-single
 NIL
@@ -653,10 +654,10 @@ NIL
 1
 
 BUTTON
-38
-96
-101
-129
+41
+224
+104
+257
 NIL
 setup
 NIL
@@ -670,10 +671,10 @@ NIL
 1
 
 SLIDER
-45
-164
-217
-197
+48
+292
+220
+325
 years
 years
 0
@@ -685,10 +686,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-31
-33
-203
-66
+34
+161
+206
+194
 scale-factor
 scale-factor
 0
@@ -715,10 +716,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-391
-86
-483
-119
+268
+104
+360
+137
 bau-seco-annual-growth
 bau-seco-annual-growth
 0
@@ -732,7 +733,7 @@ HORIZONTAL
 SLIDER
 685
 111
-881
+777
 144
 braco-do-bau-annual-growth
 braco-do-bau-annual-growth
@@ -760,10 +761,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-944
-338
-1036
-371
+867
+232
+959
+265
 pedra-de-amolar-annual-growth
 pedra-de-amolar-annual-growth
 0
@@ -790,10 +791,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1066
-484
-1158
-517
+989
+378
+1081
+411
 barranco-alto-annual-growth
 barranco-alto-annual-growth
 0
@@ -835,10 +836,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1035
-718
-1127
-751
+958
+612
+1050
+645
 ilhotinha-annual-growth
 ilhotinha-annual-growth
 0
@@ -850,10 +851,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1059
-618
-1152
-651
+982
+512
+1075
+545
 barra-de-luiz-alves-annual-growth
 barra-de-luiz-alves-annual-growth
 0
@@ -865,10 +866,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-759
-983
-851
-1016
+710
+875
+802
+908
 minas-annual-growth
 minas-annual-growth
 0
@@ -880,10 +881,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-922
-963
-1014
-996
+876
+854
+968
+887
 sao-joao-annual-growth
 sao-joao-annual-growth
 0
@@ -910,10 +911,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1079
-915
-1171
-948
+1010
+694
+1102
+727
 boa-vista-annual-growth
 boa-vista-annual-growth
 0
@@ -925,10 +926,10 @@ NIL
 HORIZONTAL
 
 PLOT
-1217
-535
-1642
-809
+1113
+611
+1538
+885
 População por bairro
 Time
 population
@@ -957,10 +958,10 @@ PENS
 "sao-joao" 1.0 0 -2064490 true "" "plot count students with [area-name = \"sao-joao\"]"
 
 PLOT
-1400
-30
-1641
-150
+1296
+106
+1537
+226
 Renda média população
 years
 Salary
@@ -975,10 +976,10 @@ PENS
 "default" 1.0 0 -11085214 true "" "  if any? students [\n    plot mean [income] of students\n  ]\n"
 
 MONITOR
-1213
-40
-1382
-85
+1109
+116
+1278
+161
 Quantidade alunos formados
 students-graduated
 0
@@ -986,10 +987,10 @@ students-graduated
 11
 
 PLOT
-1216
-214
-1698
-366
+1112
+290
+1594
+442
 Estudantes por escola
 Students
 NIL
@@ -1010,10 +1011,10 @@ PENS
 "Domingos José Machado" 1.0 0 -6459832 true "" "plot students-per-school \"Escola Municipal Domingos José Machado\""
 
 PLOT
-1217
-376
-1679
-526
+1113
+452
+1575
+602
 Capacidade das escolas
 Escola
 NIL
@@ -1034,10 +1035,10 @@ PENS
 "EM Domingos José Machado" 1.0 0 -6459832 true "" "plot school-capacity \"Escola Municipal Domingos José Machado\""
 
 PLOT
-1674
-21
-1874
-171
+1570
+97
+1770
+247
 Deslocamento bairro origem
 NIL
 NIL
@@ -1052,10 +1053,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot students-moved-between-areas"
 
 MONITOR
-1215
-100
-1381
-145
+1111
+176
+1277
+221
 Quantidade alunos sem escola
 students-not-studying
 0
@@ -1063,10 +1064,10 @@ students-not-studying
 11
 
 BUTTON
-131
-227
-218
-260
+134
+355
+221
+388
 NIL
 go-repeat
 T
@@ -1080,10 +1081,10 @@ NIL
 1
 
 MONITOR
-1217
-161
-1385
-206
+1113
+237
+1281
+282
 NIL
 students-studying
 0
@@ -1091,10 +1092,10 @@ students-studying
 11
 
 BUTTON
-74
-366
-166
-399
+77
+494
+169
+527
 NIL
 find-school
 NIL
@@ -1108,10 +1109,10 @@ NIL
 1
 
 MONITOR
-1405
-161
-1536
-206
+1301
+237
+1432
+282
 NIL
 new-students-eligible
 17
@@ -1119,10 +1120,10 @@ new-students-eligible
 11
 
 MONITOR
+1450
+235
 1554
-159
-1658
-204
+280
 NIL
 total-first-choice
 17

@@ -498,6 +498,7 @@ end
 to-report school-capacity [school-name]
   let school-selected one-of schools with [name = school-name]
   if school-selected = nobody [
+;    print school-name
     report 0
   ]
 
@@ -620,15 +621,15 @@ NIL
 1
 
 SLIDER
-45
-164
-217
-197
+38
+161
+210
+194
 years
 years
 0
 100
-0.0
+24.0
 1
 1
 NIL
@@ -953,7 +954,7 @@ true
 PENS
 "EEB Marcos Konder" 1.0 0 -1184463 true "" "plot students-per-school \"EEB Marcos Konder\""
 "EEB Valério Gomes" 1.0 0 -8630108 true "" "plot students-per-school \"EEB Valério Gomes\""
-"Nova Escola" 1.0 0 -13791810 true "" "plot students-per-school \"Nova Escola\""
+"Nova Escola" 1.0 0 -14454117 true "" "plot students-per-school \"Nova Escola\""
 
 PLOT
 1217

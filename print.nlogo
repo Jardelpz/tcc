@@ -32,7 +32,7 @@
 
 extensions [gis]
 
-globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj year-state]
+globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj year-state capacity-scale]
 
 breed [schools a-school]
 breed [students a-student]
@@ -157,158 +157,144 @@ to setup-map
 end
 
 
-to setup-schools
-;    create-schools 1 [
-;    set area-name "ilhotinha"
-;    set school-type "state"
-;    set shape "house"
-;    set color blue
-;    set name "EEB Marcos Konder"
-;    set xcor 14
-;    set ycor -15
-;    set available-class [1 2 3]
-;    set capacity 100
-;  ]
-;  create-schools 1 [
-;    set area-name "ilhotinha"
-;    set school-type "state"
-;    set shape "house"
-;    set color pink
-;    set name "EEB Marcos Konder"
-;    set xcor 18
-;    set ycor -21
-;    set available-class [1 2 3]
-;    set capacity 100
-;  ]
-;
-;  create-schools 1 [
-;    set area-name "pedra-de-amolar"
-;    set school-type "state"
-;    set shape "house"
-;    set color violet
-;    set name "EEB Valério Gomes"
-;    set xcor 33
-;    set ycor 3
-;    set available-class [1 2 3]
-;    set capacity 100
-;  ]
-;
-;  create-schools 1 [
-;    set area-name "ilhotinha"
-;    set school-type "municiple"
-;    set shape "house"
-;    set color orange
-;    set name "Escola Municipal Domingos José Machado"
-;    set xcor 26
-;    set ycor -25
-;    set available-class [1 2]
-;    set capacity 100
-;  ]
-;
-;  create-schools 1 [
-;    set area-name "minas"
-;    set school-type "municiple"
-;    set shape "house"
-;    set color blue
-;    set name "Escola Municipal José Elias de Oliveira"
-;    set xcor 7
-;    set ycor -38
-;    set available-class [1 2]
-;    set capacity 100
-;  ]
-;
-;  create-schools 1 [
-;    set area-name "bau-central"
-;    set school-type "municiple"
-;    set shape "house"
-;    set color yellow
-;    set name "Escola Municipal Alberto Schmitt"
-;    set xcor -4
-;    set ycor 9
-;    set available-class [1 2]
-;    set capacity 100
-;  ]
-;
-;  create-schools 1 [
-;    set area-name "alto-bau"
-;    set school-type "municiple"
-;    set shape "house"
-;    set color brown
-;    set name "Escola Municipal Pedro Teixeira de Melo"
-;    set xcor -22
-;    set ycor 16
-;    set available-class [1 2]
-;    set capacity 100
-;  ]
 
+to setup-schools
+  set capacity-scale round(480 * scale-factor / 100)
+  create-schools 1 [
+    set area-name "ilhotinha"
+    set school-type "municiple"
+    set shape "house"
+    set color brown
+    set name "Escola Municipal Domingos José Machado"
+    set xcor 26
+    set ycor -25
+    set available-class [1 2]
+    set capacity capacity-scale
+    set size 2
+  ]
+
+  create-schools 1 [
+    set area-name "minas"
+    set school-type "municiple"
+    set shape "house"
+    set color orange
+    set name "Escola Municipal José Elias de Oliveira"
+    set xcor 7
+    set ycor -38
+    set available-class [1 2]
+    set capacity capacity-scale
+    set size 2
+  ]
+
+  create-schools 1 [
+    set area-name "bau-central"
+    set school-type "municiple"
+    set shape "house"
+    set color pink
+    set name "Escola Municipal Alberto Schmitt"
+    set xcor -4
+    set ycor 9
+    set available-class [1 2]
+    set capacity capacity-scale
+    set size 2
+  ]
+
+  create-schools 1 [
+    set area-name "alto-bau"
+    set school-type "municiple"
+    set shape "house"
+    set color gray
+    set name "Escola Municipal Pedro Teixeira de Melo"
+    set xcor -22
+    set ycor 16
+    set available-class [1 2]
+    set capacity capacity-scale
+    set size 2
+  ]
+
+  set capacity-scale round(750 * scale-factor / 100)
+  create-schools 1 [
+    set area-name "ilhotinha"
+    set school-type "state"
+    set shape "house"
+    set color yellow
+    set name "EEB Marcos Konder"
+    set xcor 18
+    set ycor -21
+    set available-class [1 2 3]
+    set capacity capacity-scale
+    set size 2
+  ]
+
+  create-schools 1 [
+    set area-name "pedra-de-amolar"
+    set school-type "state"
+    set shape "house"
+    set color violet
+    set name "EEB Valério Gomes"
+    set xcor 33
+    set ycor 3
+    set available-class [1 2 3]
+    set capacity capacity-scale
+    set size 2
+  ]
 
 end
 
 
 to setup-students
-  create-students 10 [
-      set area-name "bairro"
-      set age 10
-      set start-age age
-      set income distribute-income
-      set chosen-school nobody
-      set previous-school nobody
-      set shape define-shape
-      set color white
-      set class define-student-class
-    set xcor 25
-    set ycor 10
-  ]
+;  create-students 10 [
+;      set area-name "bairro"
+;      set age 10
+;      set start-age age
+;      set income distribute-income
+;      set chosen-school nobody
+;      set previous-school nobody
+;      set shape define-shape
+;      set color white
+;      set class define-student-class
+;      set xcor -12
+;      set ycor 23
+;  ]
 
-  create-students 5 [
-      set area-name "bairro"
-      set age 10
-      set start-age age
-      set income distribute-income
-      set chosen-school nobody
-      set previous-school nobody
-      set shape define-shape
-      set color white
-      set class define-student-class
-    set xcor 5
-    set ycor -41
-  ]
+;  create-students 5 [
+;      set area-name "bairro"
+;      set age 10
+;      set start-age age
+;      set income distribute-income
+;      set chosen-school nobody
+;      set previous-school nobody
+;      set shape define-shape
+;      set color white
+;      set class define-student-class
+;    set xcor 5
+;    set ycor -41
+;  ]
 
-  foreach gis:feature-list-of ab [ this-area ->
-    let num-students round (scale-factor / 100 * gis:property-value this-area "densidade" * gis:property-value this-area "area")
-    gis:create-turtles-inside-polygon this-area students 5 [
-
-      set area-name gis:property-value this-area "bairro"
-;      set age distribute-age
-      set age 17
-      set start-age age
-      set income distribute-income
-      set chosen-school nobody
-      set previous-school nobody
-      set shape define-shape
-      set color white
-      set class define-student-class
-    ]
-    gis:create-turtles-inside-polygon this-area students 7 [
-      set area-name gis:property-value this-area "bairro"
-      set age 10
-      set start-age age
-      set income distribute-income
-      set chosen-school nobody
-      set previous-school nobody
-      set shape define-shape
-      set color white
-      set class define-student-class
-    ]
-  ]
-  create-students-district ab
+;  foreach gis:feature-list-of ab [ this-area ->
+;    let num-students round (scale-factor / 100 * gis:property-value this-area "densidade" * gis:property-value this-area "area")
+;    gis:create-turtles-inside-polygon this-area students 2 [
+;
+;      set area-name gis:property-value this-area "bairro"
+;;      set age distribute-age
+;      set age 17
+;      set start-age age
+;      set income distribute-income
+;      set chosen-school nobody
+;      set previous-school nobody
+;      set shape define-shape
+;      set color white
+;      set class define-student-class
+;    ]
+;  ]
+;  create-students-district ab
 ;  create-students-district bla
 ;  create-students-district ba
-  create-students-district bb
+;  create-students-district bb
 ;  create-students-district bc
 ;  create-students-district bs
 ;  create-students-district bv
-;  create-students-district bdb
+  create-students-district bdb
 ;  create-students-district ce
 ;  create-students-district il
 ;  create-students-district mi
@@ -787,10 +773,10 @@ NIL
 1
 
 SLIDER
-39
-353
-211
-386
+31
+76
+204
+109
 years
 years
 0
@@ -808,23 +794,6 @@ OUTPUT
 218
 11
 
-BUTTON
-101
-226
-179
-259
-Métricas
-show-results
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
 SLIDER
 31
 33
@@ -841,10 +810,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1022
-457
-1114
-490
+1730
+459
+1822
+492
 alto-bau-annual-growth
 alto-bau-annual-growth
 0
@@ -856,10 +825,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1090
-138
-1182
-171
+1798
+587
+1890
+620
 bau-seco-annual-growth
 bau-seco-annual-growth
 0
@@ -886,10 +855,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1128
-628
-1220
-661
+1727
+717
+1819
+750
 bau-baixo-annual-growth
 bau-baixo-annual-growth
 0
@@ -1021,10 +990,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1088
-556
-1180
-589
+1589
+753
+1681
+786
 bau-central-annual-growth
 bau-central-annual-growth
 0
@@ -1136,10 +1105,10 @@ PENS
 "Nova Escola" 1.0 0 -2674135 true "" "plot students-per-school \"Nova Escola\""
 
 PLOT
-1225
-574
-1687
-724
+1223
+567
+1685
+717
 Capacidade das escolas
 Escola
 NIL
@@ -1235,10 +1204,10 @@ students-studying
 11
 
 BUTTON
-838
-44
-930
-77
+1740
+510
+1832
+543
 NIL
 find-school
 NIL
