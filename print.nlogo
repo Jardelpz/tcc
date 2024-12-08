@@ -160,90 +160,90 @@ end
 
 to setup-schools
   set capacity-scale round(480 * scale-factor / 100)
-  create-schools 1 [
-    set area-name "ilhotinha"
-    set school-type "municiple"
-    set shape "house"
-    set color brown
-    set name "Escola Municipal Domingos José Machado"
-    set xcor 26
-    set ycor -25
-    set available-class [1 2]
-    set capacity capacity-scale
-    set size 2
-  ]
+;  create-schools 1 [
+;    set area-name "ilhotinha"
+;    set school-type "municiple"
+;    set shape "house"
+;    set color brown
+;    set name "Escola Municipal Domingos José Machado"
+;    set xcor 26
+;    set ycor -25
+;    set available-class [1 2]
+;    set capacity capacity-scale
+;    set size 2
+;  ]
+;
+;  create-schools 1 [
+;    set area-name "minas"
+;    set school-type "municiple"
+;    set shape "house"
+;    set color orange
+;    set name "Escola Municipal José Elias de Oliveira"
+;    set xcor 7
+;    set ycor -38
+;    set available-class [1 2]
+;    set capacity capacity-scale
+;    set size 2
+;  ]
+;
+;  create-schools 1 [
+;    set area-name "bau-central"
+;    set school-type "municiple"
+;    set shape "house"
+;    set color pink
+;    set name "Escola Municipal Alberto Schmitt"
+;    set xcor -4
+;    set ycor 9
+;    set available-class [1 2]
+;    set capacity capacity-scale
+;    set size 2
+;  ]
 
-  create-schools 1 [
-    set area-name "minas"
-    set school-type "municiple"
-    set shape "house"
-    set color orange
-    set name "Escola Municipal José Elias de Oliveira"
-    set xcor 7
-    set ycor -38
-    set available-class [1 2]
-    set capacity capacity-scale
-    set size 2
-  ]
+;  create-schools 1 [
+;    set area-name "alto-bau"
+;    set school-type "municiple"
+;    set shape "house"
+;    set color gray
+;    set name "Escola Municipal Pedro Teixeira de Melo"
+;    set xcor -2
+;    set ycor 13
+;    set available-class [1 2]
+;    set capacity 1
+;    set size 2
+;  ]
 
-  create-schools 1 [
-    set area-name "bau-central"
-    set school-type "municiple"
-    set shape "house"
-    set color pink
-    set name "Escola Municipal Alberto Schmitt"
-    set xcor -4
-    set ycor 9
-    set available-class [1 2]
-    set capacity capacity-scale
-    set size 2
-  ]
-
-  create-schools 1 [
-    set area-name "alto-bau"
-    set school-type "municiple"
-    set shape "house"
-    set color gray
-    set name "Escola Municipal Pedro Teixeira de Melo"
-    set xcor -22
-    set ycor 16
-    set available-class [1 2]
-    set capacity capacity-scale
-    set size 2
-  ]
-
-  set capacity-scale round(750 * scale-factor / 100)
-  create-schools 1 [
-    set area-name "ilhotinha"
-    set school-type "state"
-    set shape "house"
-    set color yellow
-    set name "EEB Marcos Konder"
-    set xcor 18
-    set ycor -21
-    set available-class [1 2 3]
-    set capacity capacity-scale
-    set size 2
-  ]
-
-  create-schools 1 [
-    set area-name "pedra-de-amolar"
-    set school-type "state"
-    set shape "house"
-    set color violet
-    set name "EEB Valério Gomes"
-    set xcor 33
-    set ycor 3
-    set available-class [1 2 3]
-    set capacity capacity-scale
-    set size 2
-  ]
+;  set capacity-scale round(750 * scale-factor / 100)
+;  create-schools 1 [
+;    set area-name "ilhotinha"
+;    set school-type "state"
+;    set shape "house"
+;    set color yellow
+;    set name "EEB Marcos Konder"
+;    set xcor 18
+;    set ycor -21
+;    set available-class [1 2 3]
+;    set capacity capacity-scale
+;    set size 2
+;  ]
+;
+;  create-schools 1 [
+;    set area-name "pedra-de-amolar"
+;    set school-type "state"
+;    set shape "house"
+;    set color violet
+;    set name "EEB Valério Gomes"
+;    set xcor 33
+;    set ycor 3
+;    set available-class [1 2 3]
+;    set capacity capacity-scale
+;    set size 2
+;  ]
 
 end
 
 
 to setup-students
-;  create-students 10 [
+;  create-students 1 [
 ;      set area-name "bairro"
 ;      set age 10
 ;      set start-age age
@@ -253,31 +253,13 @@ to setup-students
 ;      set shape define-shape
 ;      set color white
 ;      set class define-student-class
-;      set xcor -12
-;      set ycor 23
+;      set xcor 5
+;      set ycor 16
 ;  ]
-
-;  create-students 5 [
-;      set area-name "bairro"
-;      set age 10
-;      set start-age age
-;      set income distribute-income
-;      set chosen-school nobody
-;      set previous-school nobody
-;      set shape define-shape
-;      set color white
-;      set class define-student-class
-;    set xcor 5
-;    set ycor -41
-;  ]
-
-;  foreach gis:feature-list-of ab [ this-area ->
-;    let num-students round (scale-factor / 100 * gis:property-value this-area "densidade" * gis:property-value this-area "area")
-;    gis:create-turtles-inside-polygon this-area students 2 [
 ;
-;      set area-name gis:property-value this-area "bairro"
-;;      set age distribute-age
-;      set age 17
+;  create-students 1 [
+;      set area-name "bairro"
+;      set age 10
 ;      set start-age age
 ;      set income distribute-income
 ;      set chosen-school nobody
@@ -285,20 +267,38 @@ to setup-students
 ;      set shape define-shape
 ;      set color white
 ;      set class define-student-class
-;    ]
+;    set xcor 6
+;    set ycor 10
 ;  ]
+
+  foreach gis:feature-list-of bv [ this-area ->
+    let num-students round (scale-factor / 100 * gis:property-value this-area "densidade" * gis:property-value this-area "area")
+    gis:create-turtles-inside-polygon this-area students 200 [
+
+      set area-name gis:property-value this-area "bairro"
+;      set age distribute-age
+      set age 17
+      set start-age age
+      set income distribute-income
+      set chosen-school nobody
+      set previous-school nobody
+      set shape define-shape
+      set color white
+      set class define-student-class
+    ]
+  ]
 ;  create-students-district ab
-;  create-students-district bla
+  create-students-district bla
 ;  create-students-district ba
 ;  create-students-district bb
 ;  create-students-district bc
 ;  create-students-district bs
-;  create-students-district bv
-  create-students-district bdb
+  create-students-district bv
+;  create-students-district bdb
 ;  create-students-district ce
 ;  create-students-district il
 ;  create-students-district mi
-;  create-students-district mis
+  create-students-district mis
 ;  create-students-district pda
 ;  create-students-district poc
 ;  create-students-district sj
@@ -383,8 +383,8 @@ to find-school
     create-schools 1 [
       set school-type "state"
       set shape "house"
-      set color white
-      set size 3
+      set color blue
+      set size 2
       set name "Nova Escola"
       set xcor median-x
       set ycor median-y
@@ -803,7 +803,7 @@ scale-factor
 scale-factor
 0
 100
-10.0
+20.0
 1
 1
 NIL
@@ -840,10 +840,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1248
-159
-1340
-192
+1570
+734
+1662
+767
 braco-do-bau-annual-growth
 braco-do-bau-annual-growth
 0
@@ -990,10 +990,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1589
-753
-1681
-786
+717
+100
+889
+133
 bau-central-annual-growth
 bau-central-annual-growth
 0
@@ -1193,10 +1193,10 @@ NIL
 1
 
 MONITOR
-1217
-161
-1385
-206
+1219
+162
+1387
+207
 NIL
 students-studying
 0
@@ -1204,10 +1204,10 @@ students-studying
 11
 
 BUTTON
-1740
-510
-1832
-543
+116
+337
+208
+370
 NIL
 find-school
 NIL

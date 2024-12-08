@@ -17,23 +17,26 @@ to setup-schools
     set school-type "publica"
     set shape "house"
     set color green
+    set size 2
   ]
   create-schools 1 [
     setxy (random-float 32 - 16) (random-float 32 - 16)
     set school-type "estadual"
     set shape "house"
     set color blue
+    set size 2
   ]
   create-schools 1 [
     setxy (random-float 32 - 16) (random-float 32 - 16)
     set school-type "privada"
     set shape "house"
     set color red
+    set size 2
   ]
 end
 
 to setup-students
-  create-students 20 [
+  create-students 30 [
     setxy (random-float 32 - 16) (random-float 32 - 16)
     set color yellow
     set escola-escolhida nobody

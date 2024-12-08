@@ -1,12 +1,3 @@
-; obter a capacidade das escolas e adapatar com a escala - todo
-
-; identificar ponto medio de pessoas sem escola
-
-; grafico relacionando populacao e capaicidade de escola? - todo
-
-; corrigir EM para EEB
-; qnt tempo ate ter outra escola ser necessaria
-
 extensions [gis]
 
 globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj students-percentual capacity-scale new-total-students-eligible total-first-choice]
@@ -625,7 +616,7 @@ years
 years
 0
 100
-18.0
+48.0
 1
 1
 NIL
@@ -1073,7 +1064,7 @@ MONITOR
 164
 1542
 209
-NIL
+Demanda
 new-students-eligible
 17
 1
@@ -1084,7 +1075,7 @@ MONITOR
 165
 1663
 210
-NIL
+Oferta
 total-first-choice
 17
 1

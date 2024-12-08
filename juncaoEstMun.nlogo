@@ -1,36 +1,31 @@
-; capacidade da escola - falta dado real
-; verificar se a renda ta sendo atualizda com o passar dos anos e nao so uma vez - ok OBS: alunos > 18 anos continuam a receber aumento e logar nas metricas
-; adicionar goOnce e golive - ok
-; fazer com que o botao go avance um ano - ok
-
-; estressar a superlotacao, onde criar a nova escola - todo
-; criar animacao de estudantes indo para escolas - doing
-; verificiar pq escola que nem ta criada esta com alunos - ok
-
-
-
-; avaliar pq tem escola que nao ta com 100% da ocupacao - ok
-; count-municipal-to-estadual comeca a falhar depois de algumas execucoes - doing
-; execucao esta indo por bairro, tem que dar um shuffle antes de iniciar - ok
-; accept school ta lento - ok
-; estudante nao tem renda (<= 18) - ok
-; criar coloracao dos bonecos (ao inves do shape) - ok
-
-
-; obter a capacidade das escolas e adapatar com a escala - todo
-
-
-; estressar superlotacao
-; criar projeto so com municipal - criacao municipal
-; criar projeto so com estadual - criacao estadual
-; identificar ponto medio de pessoas sem escola
-
-; estudar se crescimento de 10 anos do modelo, bate com a realidade de ilhota de 2020 - ok
-; em 2010 a populacao era de 12.356 (simulando 50% da escala real = 1608 alunos) que da 13%. Após 12 anos a populacao de ilhota tem 17.046 pessoas (50% sendo 2212) = 13%.
-
-; limitar a 15km na escolha da escolha - de uma ponta a outra do mapa da 38 km, aqui no netlogo da 200 patches entao limitamos a pouco menos da metade 90 patches como distancia maxima - ok
-; grafico relacionando populacao e capaicidade de escola? - todo
-
+;Começar apresentando a interface
+;botões do usuário
+;tela da execução
+;Seção de monitoramento
+;
+;setup criação dos agentes nas escolas, escolas nas posições
+;
+;mostrar as funções de construção dos monitores
+;todos os monitores são acionados e consequentemente atualizados.
+;plotar um grafico do students-studying em tempo de execução
+;
+;executar cenário geral sem nova escola por 50 anos
+;executar cenário geral com nova escola por 50 anos
+;realizar análises dos gráficos e de saturação
+;
+;executar cenário municipal sem nova escola por 50 anos
+;executar cenários municipal com nova escola por 50 anos
+;realizar análises dos gráficos e de saturação
+;
+;voltar para cenário geral, executar sem limpar a tela, para parecer o processo de clusterização
+;executar sem fazer com que novos alunos já escolham a escola -
+;acompanhar execução de um estudante - mostrar no inspecionar, passar os anos até a classe ser atualizada
+;Comentar que sempre no início da simulação a lista de estudantes é reordenada para que estudantes sem escola tenham acesso a alteração de escola.
+;
+;alterar a densidade de um bairro pouco populoso e mostrar dinâmica de crescimento no grafico de bairros e ao criar nova escola com e sem aumento da população.
+;
+;falar sobre a renda, que é atualizada anualmente, assim como as classes. Estudantes > 18 que somente começam a ter renda e ela é atualizada 90% para dissídio, que seria algo em torno de 5% com base nos últimos anos.
+; documentação
 extensions [gis]
 
 globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj students-percentual capacity-scale new-total-students-eligible total-first-choice]
@@ -68,7 +63,7 @@ end
 
 
 to go
-  clear-drawing
+  clear-drawing ; comentar para teste 1
   set total-first-choice 0
   foreach shapefiles [ shapefile ->
     gis:draw shapefile 1
@@ -255,6 +250,25 @@ to setup-students
 end
 
 
+
+to create-students-district [shapefile]
+  foreach gis:feature-list-of shapefile [ this-area ->
+    let num-students round (scale-factor / 100 * gis:property-value this-area "densidade" * gis:property-value this-area "area") * students-percentual
+    gis:create-turtles-inside-polygon this-area students num-students [
+      set area-name gis:property-value this-area "bairro"
+      set age distribute-age
+      set start-age age
+      set income 0
+      set chosen-school nobody
+      set previous-school nobody
+      set shape define-shape
+      set color white
+      set class define-student-class
+    ]
+  ]
+end
+
+
 to choose-school
   let min-distance 90
   let closest-school nobody
@@ -297,7 +311,6 @@ to choose-school
   ] [
     if [chosen-school] of self = nobody [
       set color red
-;      set shape "x"
     ]
   ]
 
@@ -388,31 +401,13 @@ to update-density
           set chosen-school nobody
           set previous-school nobody
           ask self [
-            choose-school
+            choose-school ; comentar para teste 2
           ]
         ]
       ]
   ]
 ]
 set new-total-students-eligible new-students-total
-end
-
-
-to create-students-district [shapefile]
-  foreach gis:feature-list-of shapefile [ this-area ->
-    let num-students round (scale-factor / 100 * gis:property-value this-area "densidade" * gis:property-value this-area "area") * students-percentual
-    gis:create-turtles-inside-polygon this-area students num-students [
-      set area-name gis:property-value this-area "bairro"
-      set age distribute-age
-      set start-age age
-      set income 0
-      set chosen-school nobody
-      set previous-school nobody
-      set shape define-shape
-      set color white
-      set class define-student-class
-    ]
-  ]
 end
 
 
@@ -456,11 +451,11 @@ to-report distribute-income
     report (random 1420 + 1420)
   ]
   ifelse prob < 0.90 [
-    ;; 20% dos estudantes ganham entre 3.000 e 8.000 reais
+    ;; 20% dos estudantes ganham entre 3 e 8
     report (random 5000 + 3000)
   ]
   [
-    ;; 10% dos estudantes ganham mais de 8.526,00 reais
+    ;; 10% dos estudantes ganham entr 8 e 10
     report (random 2000 + 8000)
   ]
 end
@@ -637,10 +632,10 @@ ticks
 30.0
 
 BUTTON
-125
-224
-206
-257
+130
+227
+211
+260
 NIL
 go-single
 NIL
@@ -654,10 +649,10 @@ NIL
 1
 
 BUTTON
-41
-224
-104
-257
+52
+227
+115
+260
 NIL
 setup
 NIL
@@ -671,10 +666,10 @@ NIL
 1
 
 SLIDER
-48
-292
-220
-325
+35
+109
+207
+142
 years
 years
 0
@@ -821,21 +816,6 @@ NIL
 HORIZONTAL
 
 SLIDER
-545
-758
-637
-791
-missoes-annual-growth
-missoes-annual-growth
-0
-100
-2.72
-0.1
-1
-NIL
-HORIZONTAL
-
-SLIDER
 958
 612
 1050
@@ -866,10 +846,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-710
-875
-802
-908
+689
+848
+781
+881
 minas-annual-growth
 minas-annual-growth
 0
@@ -881,10 +861,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-876
-854
-968
-887
+861
+835
+953
+868
 sao-joao-annual-growth
 sao-joao-annual-growth
 0
@@ -1008,7 +988,7 @@ PENS
 "EM Pedro Teixeira de Melo" 1.0 0 -7500403 true "" "plot students-per-school \"Escola Municipal Pedro Teixeira de Melo\""
 "EM Alberto Schmitt" 1.0 0 -2064490 true "" "plot students-per-school \"Escola Municipal Alberto Schmitt\""
 "EM José Elias de Oliveira" 1.0 0 -955883 true "" "plot students-per-school \"Escola Municipal José Elias de Oliveira\""
-"Domingos José Machado" 1.0 0 -6459832 true "" "plot students-per-school \"Escola Municipal Domingos José Machado\""
+"EM Domingos José Machado" 1.0 0 -6459832 true "" "plot students-per-school \"Escola Municipal Domingos José Machado\""
 
 PLOT
 1113
@@ -1030,7 +1010,7 @@ PENS
 "EEB Valério Gomes" 1.0 0 -8630108 true "" "plot school-capacity \"EEB Valério Gomes\""
 "Nova Escola" 1.0 0 -13791810 true "" "plot school-capacity \"Nova Escola\""
 "EM Pedro Teixeira de Melo" 1.0 0 -7500403 true "" "plot school-capacity \"Escola Municipal Pedro Teixeira de Melo\""
-"Alberto Schmitt" 1.0 0 -2064490 true "" "plot school-capacity \"Escola Municipal Alberto Schmitt\""
+"EM Alberto Schmitt" 1.0 0 -2064490 true "" "plot school-capacity \"Escola Municipal Alberto Schmitt\""
 "EM José Elias de Oliveira" 1.0 0 -955883 true "" "plot school-capacity \"Escola Municipal José Elias de Oliveira\""
 "EM Domingos José Machado" 1.0 0 -6459832 true "" "plot school-capacity \"Escola Municipal Domingos José Machado\""
 
@@ -1064,10 +1044,10 @@ students-not-studying
 11
 
 BUTTON
-134
-355
-221
-388
+136
+284
+223
+317
 NIL
 go-repeat
 T
@@ -1092,10 +1072,10 @@ students-studying
 11
 
 BUTTON
-77
-494
-169
-527
+36
+284
+128
+317
 NIL
 find-school
 NIL
@@ -1113,7 +1093,7 @@ MONITOR
 237
 1432
 282
-NIL
+Demanda
 new-students-eligible
 17
 1
@@ -1124,42 +1104,130 @@ MONITOR
 235
 1554
 280
-NIL
+Oferta
 total-first-choice
 17
 1
 11
 
+SLIDER
+545
+758
+637
+791
+missoes-annual-growth
+missoes-annual-growth
+0
+100
+2.72
+0.1
+1
+NIL
+HORIZONTAL
+
+PLOT
+1686
+471
+1886
+621
+plot 1
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot students-studying"
+
 @#$#@#$#@
-Informações do Modelo NetLogo
+# Documentação do Modelo NetLogo
 
-### Raças
-- Escolas (a-school)
-- Estudantes (a-student)
+## Extensões
+- **GIS**: Utilizada para carregar e manipular shapefiles e realizar operações espaciais.
 
-### Variáveis de schools-own
-- school-type: Tipo da escola ("publica", "estadual", "privada")
+## Globais
+- **shapefiles**: Lista de shapefiles carregados.
+- **ilhota, ab, bla, ba, bb, bc, bs, bv, bdb, ce, il, mi, mis, pda, poc, sj**: Variáveis para armazenar shapefiles específicos dos bairros.
+- **students-percentual**: Percentual de estudantes em relação à densidade populacional.
+- **capacity-scale**: Escala de capacidade para as escolas.
+- **new-total-students-eligible**: Número de estudantes elegíveis.
+- **total-first-choice**: Contador de estudantes que escolheram uma escola como primeira opção.
 
-### Variáveis de students-own
-- escola-escolhida: A escola escolhida pelo estudante
-- idade: A idade do estudante (variando de 6 a 18 anos)
-- renda: A renda do estudante (variando de 1420 a 10000 reais)
+## Raças (Breeds)
+- **schools**: Representa as escolas.
+  - Propriedades:
+    - **name**: Nome da escola.
+    - **school-type**: Tipo da escola (municipal ou estadual).
+    - **area-name**: Nome do bairro onde está localizada.
+    - **available-class**: Lista de classes oferecidas.
+    - **capacity**: Capacidade máxima de alunos.
+    - **new-school**: Indicador se é uma nova escola.
+    - **number-students**: Número atual de alunos.
+- **students**: Representa os estudantes.
+  - Propriedades:
+    - **chosen-school**: Escola escolhida.
+    - **previous-school**: Escola anterior.
+    - **start-age**: Idade inicial.
+    - **age**: Idade atual.
+    - **income**: Renda do estudante.
+    - **area-name**: Bairro de origem.
+    - **class**: Classe escolar do estudante.
 
-### Procedimentos de Configuração
-- setup-schools: Cria uma escola de cada tipo e as posiciona aleatoriamente nas coordenadas (-16, 16).
-- setup-students: Cria estudantes com posições aleatórias e atribui a eles uma idade e renda com base na distribuição:
-  - 90% ganham menos de dois salários mínimos (2871 reais).
-  - 9% ganham entre 3000 e 8000 reais.
-  - 1% ganham mais de 8000 reais.
+## Procedimentos
 
-### Procedimento Go
-- O procedimento `go` faz com que cada estudante escolha a escola mais próxima, levando em consideração as regras:
-  - Estudantes com mais de 15 anos não podem escolher a escola estadual.
-  - Estudantes com renda acima de 3000 reais tendem a preferir a escola privada, mesmo que seja um pouco mais distante.
+### `setup`
+- Limpa e inicializa o modelo.
+- Configura o mapa, cria escolas e estudantes.
+- Define patches com cor verde.
 
-### Procedimento escolher-escola
-- Os estudantes analisam as escolas disponíveis e escolhem a mais adequada com base na distância e na renda.
-- A cor do estudante muda para a cor da escola escolhida, e ele se move até a escola, deixando um rastro (pen-down).
+### `go`
+- Atualiza o estado do modelo a cada tick.
+- Realiza operações como atualização da idade, movimentação dos estudantes, e alocação nas escolas.
+
+### `setup-map`
+- Carrega shapefiles de bairros.
+- Configura o envelope mundial do GIS.
+- Define taxas de crescimento populacional anuais para os bairros.
+
+### `setup-schools`
+- Cria escolas com propriedades específicas.
+- Define suas localizações e capacidades.
+
+### `setup-students`
+- Cria estudantes para cada bairro com base na densidade populacional.
+
+### `create-students-district`
+- Gera estudantes dentro de polígonos representados no shapefile do bairro correspondente.
+
+### `choose-school`
+- Aloca estudantes em escolas baseando-se na distância e disponibilidade.
+
+### `leave-school`
+- Remove estudantes que atingem a idade limite (acima de 18 anos) de suas escolas.
+
+### `find-school`
+- Identifica a necessidade de criar novas escolas baseando-se na distribuição espacial de estudantes sem escola.
+
+## Caminhos e Parâmetros Importantes
+- Caminho dos shapefiles: Exemplo, `"C:/Users/Jardel/Desktop/Furb/TCC2/ProjetoTCC/dados_ibge/ilhota/bairros/cidade_ilhota.shp"`.
+- Escala de capacidade de escolas: Calculada proporcionalmente à variável `scale-factor`.
+
+## Dinâmica
+- O modelo simula a escolha de escolas pelos estudantes considerando fatores como idade, renda, e proximidade.
+- O crescimento populacional nos bairros impacta a densidade e, consequentemente, a distribuição de estudantes.
+
+## Visualização
+- Os shapefiles são desenhados a cada tick para ilustrar os limites dos bairros.
+- Escolas são representadas como casas de diferentes cores, e estudantes movem-se em direção às escolas escolhidas.
+
+## Observações
+- O modelo inclui lógica para criação de novas escolas com base na demanda.
+- A idade máxima dos estudantes no sistema é de 18 anos.
+- Estudantes sem escola definida são destacados com a cor vermelha.
 @#$#@#$#@
 default
 true

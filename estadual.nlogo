@@ -1,36 +1,3 @@
-; capacidade da escola - falta dado real
-; verificar se a renda ta sendo atualizda com o passar dos anos e nao so uma vez - ok OBS: alunos > 18 anos continuam a receber aumento e logar nas metricas
-; adicionar goOnce e golive - ok
-; fazer com que o botao go avance um ano - ok
-
-; estressar a superlotacao, onde criar a nova escola - todo
-; criar animacao de estudantes indo para escolas - doing
-; verificiar pq escola que nem ta criada esta com alunos - ok
-
-
-
-; avaliar pq tem escola que nao ta com 100% da ocupacao - ok
-; count-municipal-to-estadual comeca a falhar depois de algumas execucoes - doing
-; execucao esta indo por bairro, tem que dar um shuffle antes de iniciar - ok
-; accept school ta lento - ok
-; estudante nao tem renda (<= 18) - ok
-; criar coloracao dos bonecos (ao inves do shape) - ok
-
-
-; obter a capacidade das escolas e adapatar com a escala - todo
-
-
-; estressar superlotacao
-; criar projeto so com municipal - criacao municipal
-; criar projeto so com estadual - criacao estadual
-; identificar ponto medio de pessoas sem escola
-
-; estudar se crescimento de 10 anos do modelo, bate com a realidade de ilhota de 2020 - ok
-; em 2010 a populacao era de 12.356 (simulando 50% da escala real = 1608 alunos) que da 13%. Após 12 anos a populacao de ilhota tem 17.046 pessoas (50% sendo 2212) = 13%.
-
-; limitar a 15km na escolha da escolha - de uma ponta a outra do mapa da 38 km, aqui no netlogo da 200 patches entao limitamos a pouco menos da metade 90 patches como distancia maxima - ok
-; grafico relacionando populacao e capaicidade de escola? - todo
-
 extensions [gis]
 
 globals [shapefiles ilhota ab bla ba bb bc bs bv bdb ce il mi mis pda poc sj students-percentual capacity-scale new-total-students-eligible total-first-choice]
@@ -629,7 +596,7 @@ years
 years
 0
 100
-24.0
+0.0
 1
 1
 NIL
@@ -1055,7 +1022,7 @@ MONITOR
 161
 1536
 206
-NIL
+Demanda
 new-students-eligible
 17
 1
@@ -1066,7 +1033,7 @@ MONITOR
 159
 1653
 204
-NIL
+Oferta
 total-first-choice
 17
 1
